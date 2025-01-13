@@ -194,6 +194,9 @@ This plugin communicates with our tracking server to send usage data **only** if
 
 == Changelog ==
 
+= 2.9.0 ( 14.01.2025)
+* Tweak - Added Hebrew language localization to the plugin, allowing admins to enable Hebrew as the delivery date calendar language for users.
+
 = 2.8.2 (03.12.2024)
 * Tweak: Removed the call to our tracking server to fetch the deactivation reasons and added them in the plugin itself.
 * Fix: Resolved issues with untranslated strings.
