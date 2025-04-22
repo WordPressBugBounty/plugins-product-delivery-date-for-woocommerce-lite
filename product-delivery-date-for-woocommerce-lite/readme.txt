@@ -4,10 +4,10 @@ Contributors: ashokrane, MoxaJogani, tychesoftwares
 Donate link: https://www.paypal.me/TycheSoftwares
 Author URI: https://www.tychesoftwares.com/
 Tags: delivery calendar, product delivery date, woocommerce order delivery, product delivery
-Requires at least: 1.3
-Tested up to: 6.7.1
-Stable tag: trunk
-Requires PHP: 5.6
+Requires at least: 3.0
+Tested up to: 6.8.0
+Requires PHP: 7.3
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -194,8 +194,14 @@ This plugin communicates with our tracking server to send usage data **only** if
 
 == Changelog ==
 
+= 3.0.0 ( 22.04.2025)
+* Fix - Selected delivery date was not displaying on the Order Received and Edit Order pages when orders were placed using the block-based checkout page.
+* Fix - Resolved all PHPCS warnings and aligned the code with WordPress Coding Standards to enhance quality and maintainability.
+* Tweak - Updated for compatibility with WordPress 6.8.0
+* Tweak - Updated for compatibility with WooCommerce 9.8.1
+
 = 2.9.0 ( 14.01.2025)
-* Tweak - Added Hebrew language localization to the plugin, allowing admins to enable Hebrew as the delivery date calendar language for users.
+* Tweak - Added Hebrew language localization to the plugin, providing admins with the option to enable and change the calendar language for Hebrew users.
 
 = 2.8.2 (03.12.2024)
 * Tweak: Removed the call to our tracking server to fetch the deactivation reasons and added them in the plugin itself.

@@ -36,10 +36,10 @@ class Prdd_Lite_Process {
 
 		$prdd_delivery_field_mandatory = get_post_meta( $duplicate_of, '_woo_prdd_lite_delivery_field_mandatory', true );
 
-		if ( '' === $prdd_maximum_number_days || 'null' == $prdd_maximum_number_days ) { // phpcs:ignore loose comparison ok.
+		if ( '' === $prdd_maximum_number_days || 'null' == $prdd_maximum_number_days ) { // phpcs:ignore
 			$prdd_maximum_number_days = '30';
 		}
-		$current_time = current_time( 'timestamp' );
+		$current_time = current_time( 'timestamp' ); // phpcs:ignore
 		if ( '' !== $prdd_minimum_delivery_time && 0 !== $prdd_minimum_delivery_time ) {
 			$advance_seconds = $prdd_minimum_delivery_time * 60 * 60;
 			// now we need the first available weekday for delivery as minimum time is to be calculated from thereon.
@@ -66,9 +66,8 @@ class Prdd_Lite_Process {
 			if ( 'on' === $prdd_delivery_field_mandatory ) {
 				print( ' <abbr class="required" title="required" style="color: red;font-weight: 800;border: none;">*</abbr>' );
 			}
-			print( '<div class="delivery_input_container" style="position: relative;"><input type="text" id="delivery_calender_lite" name="delivery_calender_lite" class="delivery_calender_lite" style="cursor:text!important;display:block;  margin-bottom:20px; width:100%;" readonly/> <img src="' . esc_attr( $plugins_url ) . '/product-delivery-date-for-woocommerce-lite/images/cal.png" width="20" height="20" style="cursor:pointer!important; position:absolute; top:50%; right:5%; transform: translateY(-50%);" id ="delivery_cal_lite"/></div></div><input type="hidden" id="prdd_lite_hidden_date" name="prdd_lite_hidden_date"/>' );
+			print( '<div class="delivery_input_container" style="position: relative;"><input type="text" id="delivery_calender_lite" name="delivery_calender_lite" class="delivery_calender_lite" style="cursor:text!important;display:block;  margin-bottom:20px; width:100%;" readonly/> <img src="' . esc_attr( $plugins_url ) . '/product-delivery-date-for-woocommerce-lite/images/cal.png" width="20" height="20" style="cursor:pointer!important; position:absolute; top:50%; right:5%; transform: translateY(-50%);" id ="delivery_cal_lite"/></div></div><input type="hidden" id="prdd_lite_hidden_date" name="prdd_lite_hidden_date"/>' ); // phpcs:ignore
 		}
-
 	}
 
 	/**
@@ -131,7 +130,6 @@ class Prdd_Lite_Process {
 		);
 
 		wp_enqueue_script( 'prdd-lite-process-functions' );
-
 	}
 
 	/**
@@ -172,7 +170,7 @@ class Prdd_Lite_Process {
 	 * @param array  $values - Cart Item data Values.
 	 * @param string $cart_item_key - Cart Item Key.
 	 */
-	public static function prdd_lite_get_cart_item_from_session( $cart_item, $values, $cart_item_key ) {
+	public static function prdd_lite_get_cart_item_from_session( $cart_item, $values, $cart_item_key ) {// phpcs:ignore
 		if ( isset( $cart_item['prdd_lite_delivery'] ) ) {
 			$price = $cart_item['data']->get_price();
 
@@ -235,7 +233,7 @@ class Prdd_Lite_Process {
 	 * @param array $cart_item - Product Details.
 	 * @since 1.0
 	 */
-	public static function prdd_lite_order_item_meta( $item_meta, $cart_item ) {
+	public static function prdd_lite_order_item_meta( $item_meta, $cart_item ) { // phpcs:ignore
 		if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0' ) < 0 ) {
 			return;
 		}
@@ -262,7 +260,7 @@ class Prdd_Lite_Process {
 
 			$query   = 'SELECT order_item_id, order_id FROM `' . $wpdb->prefix . 'woocommerce_order_items`
 					              WHERE order_id = %s AND order_item_name LIKE %s' . $sub_query;
-			$results = $wpdb->get_results( $wpdb->prepare( $query, $item_meta, $post_title . '%' ) ); // phpcs:ignore unprepared SQL ok, phpcs:ignore WordPress.DB.DirectDatabaseQuery.
+			$results = $wpdb->get_results( $wpdb->prepare( $query, $item_meta, $post_title . '%' ) ); // phpcs:ignore
 
 			$order_item_ids[] = $results[0]->order_item_id;
 			$order_id         = $results[0]->order_id;
@@ -293,7 +291,7 @@ class Prdd_Lite_Process {
 				$cache_key       = WC_Cache_Helper::get_cache_prefix( 'orders' ) . 'item_meta_array_' . $results[0]->order_item_id;
 				$item_meta_array = wp_cache_get( $cache_key, 'orders' );
 				if ( false !== $item_meta_array ) {
-					$metadata = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value, meta_id FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE order_item_id = %d AND meta_key IN (%s,%s) ORDER BY meta_id", absint( $results[0]->order_item_id ), 'Delivery Date', '_prdd_lite_date' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.
+					$metadata = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value, meta_id FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE order_item_id = %d AND meta_key IN (%s,%s) ORDER BY meta_id", absint( $results[0]->order_item_id ), 'Delivery Date', '_prdd_lite_date' ) ); // phpcs:ignore
 					foreach ( $metadata as $metadata_row ) {
 						$item_meta_array[ $metadata_row->meta_id ] = (object) array(
 							'key'   => $metadata_row->meta_key,
@@ -302,6 +300,56 @@ class Prdd_Lite_Process {
 					}
 					wp_cache_set( $cache_key, $item_meta_array, 'orders' );
 				}
+			}
+		}
+	}
+
+	/**
+	 * This function updates the database for the delivery details and adds delivery fields on the Order Received page & WooCommerce->Orders page when an order is placed with block checkout page.
+	 *
+	 * @hook woocommerce_store_api_checkout_update_order_from_request
+	 *
+	 * @param int   $order - Order ID.
+	 * @param array $request - Product Details.
+	 * @since 1.0
+	 */
+	public static function prdd_lite_order_item_meta_block_checkout( $order, $request ) {
+		if ( ! is_a( $order, 'WC_Order' ) ) {
+			return;
+		}
+		$cart = WC()->cart;
+		if ( empty( $cart ) ) {
+			return;
+		}
+		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+			if ( ! isset( $cart_item['prdd_lite_delivery'] ) ) {
+				continue;
+			}
+			$delivery   = $cart_item['prdd_lite_delivery'];
+			$product_id = isset( $cart_item['product_id'] ) ? $cart_item['product_id'] : 0;
+			$post_id    = Prdd_Lite_Common::prdd_lite_get_product_id( $product_id );
+			foreach ( $order->get_items() as $item_id => $item ) {
+				if ( ! $item instanceof WC_Order_Item_Product ) {
+					continue;
+				}
+				$_product = $item->get_product();
+				if ( ! $_product ) {
+					continue;
+				}
+				if ( $_product->get_id() != $product_id ) {
+					continue;
+				}
+				// Add delivery date if exists.
+				if ( isset( $delivery[0]['delivery_date'] ) && '' !== $delivery[0]['delivery_date'] ) {
+					$item->add_meta_data( 'Delivery Date', sanitize_text_field( $delivery[0]['delivery_date'] ), true );
+				}
+				// Add hidden date if exists.
+				if ( isset( $delivery[0]['delivery_hidden_date'] ) && '' !== $delivery[0]['delivery_hidden_date'] ) {
+					$hidden_date = gmdate( 'Y-m-d', strtotime( $delivery[0]['delivery_hidden_date'] ) );
+					$item->add_meta_data( '_prdd_lite_date', sanitize_text_field( $hidden_date ), true );
+					$item->add_meta_data( '_prdd_date', sanitize_text_field( $hidden_date ), true );
+				}
+				$item->save();
 			}
 		}
 	}
