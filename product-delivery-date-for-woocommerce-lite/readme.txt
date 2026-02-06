@@ -5,9 +5,9 @@ Donate link: https://www.paypal.me/TycheSoftwares
 Author URI: https://www.tychesoftwares.com/
 Tags: delivery calendar, product delivery date, woocommerce order delivery, product delivery
 Requires at least: 3.0
-Tested up to: 6.8.2
+Tested up to: 6.9
 Requires PHP: 7.3
-Stable tag: 3.1.0
+Stable tag: 3.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,7 @@ This plugin allows you to improve your customer service by delivering the produc
 <li>Set the <strong>minimum required time for the WooCommerce product delivery</strong> in hours.</li>
 <li>Choose how long you wish to take WooCommerce product delivery in the future.</li>
 <li>Use inbuilt WordPress product datepicker.</li>
+<li>View product delivery details in a calendar format, helping admins see scheduled product deliveries.</li>
 </ol>
 
 ### Differences between Lite & PRO version
@@ -196,6 +197,15 @@ This plugin communicates with our tracking server to send usage data **only** if
 
 == Changelog ==
 
+= 3.3.0 - 12/01/2026 =
+* Enhancement - Calendar View to display product delivery details in a calendar format.
+* Fixed - Vulnerability caused by a missing capability check that allowed authenticated users with subscriber-level access or higher to perform unauthorized actions.
+
+= 3.2.0 - 18/11/2025 =
+* Fix - Cross Site Request Forgery (CSRF) vulnerability.
+* Tweak - Update compatibility with WordPress 6.8.3
+* Tweak - Update compatibility with WooCommerce 10.3.5
+
 = 3.1.0 ( 29.07.2025)
 * Fix - "Preview Theme" and "No Delivery on These Dates" calendars appeared oversized on the Global Delivery Settings page.
 * Fix - "View Deliveries" page did not display any deliveries when WooCommerce Compatibility Mode was disabled.
@@ -290,38 +300,6 @@ Enhancement :- Plugin has been made compatible with WooCommerce High-Performance
 * Fixed some warnings being added in debug.log
 * Fixed an issue where orphan records were being left behind when the plugin is deleted.
 
-= 1.8 (23.05.2018) =
-* The plugin is now GDPR compliant.
-* The Delivery Date for the orders will now be exported to the User's Personal Data from the Tools -> Export Personal Data menu.
-
-= 1.7 (23.01.2018) =
-* The Delivery Date field was appearing small when used with TwentySeventeen theme. This is fixed.
-* The plugin is made compatible with Loco Translate plugin.
-
-= 1.6 (01.11.2017) =
-* The selected delivery date for variable product was not displayed on the Order Received page and in the customer new order email notification. This is fixed now.
-
-= 1.5 (17.08.2017) =
-* You can now disable weekdays on which you do not deliver in the delivery calendar on the product page.
-
-= 1.4 (04.04.2017) =
-* All the delivery dates are displayed in first product on Order received page when same product is added with multiple delivery dates in single order. This is fixed now.
-
-= 1.3 (28.06.2016) =
-* A new setting named as 'Minimum Delivery preparation time (in hours)' is added on the admin product page which allows setting the minimum delivery preparation time required. Customers can choose the delivery dates only after the set time.
-
-* A new setting named as 'Number of Dates to choose' is added on the admin product page which allows limiting the delivery dates available for customers to choose deliveries from. 
-
-= 1.2 (29.01.2016) =
-* Delivery Date selected for the product was not coming in the email notifications sent to the customer and admin when the order is placed on the checkout page with WooCommerce v2.5.x. This is fixed now.
-
-= 1.1 (15.12.2015) =
-* .po, .pot and .mo files are included in the plugin. The plugin strings can now be translated to any language using these files.
-
-= 1.0 (27.11.2015) =
-* Initial release.
-
-== Upgrade Notice ==
 = 1.8 (23.05.2018) =
 * The plugin is now GDPR compliant.
 * The Delivery Date for the orders will now be exported to the User's Personal Data from the Tools -> Export Personal Data menu.
