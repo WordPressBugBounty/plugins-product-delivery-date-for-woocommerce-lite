@@ -5,9 +5,9 @@ Donate link: https://www.paypal.me/TycheSoftwares
 Author URI: https://www.tychesoftwares.com/
 Tags: delivery calendar, product delivery date, woocommerce order delivery, product delivery
 Requires at least: 3.0
-Tested up to: 6.9
-Requires PHP: 7.3
-Stable tag: 3.3.0
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 3.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,7 @@ This WooCommerce delivery & pickup date and time plugin will allow the customer 
 
 This plugin allows you to improve your customer service by delivering the product on the customer's chosen date. It's an essential WooCommerce product delivery by date plugin!
 
-**What if you can get better features for less money? -[Try Product Delivery Date Pro for just $1](https://www.tychesoftwares.com/store/premium-plugins/product-delivery-date-pro-for-woocommerce/?utm_source=wprepo&utm_medium=otherprolink&utm_campaign=ProductDeliveryDateLite)**
+**What if you can get better features for less money? -[Try Product Delivery Date Pro for just $1](https://www.tychesoftwares.com/products/woocommerce-product-delivery-date-pro-plugin-trial/?utm_source=wprepo&utm_medium=otherprolink&utm_campaign=ProductDeliveryDateLite)**
 
 ### WOOCOMMERCE PRODUCT DELIVERY DATE ALLOWS YOU TO:
 
@@ -196,6 +196,10 @@ WooCommerce Product Delivery Date Lite allows customers to select a WooCommerce 
 This plugin communicates with our tracking server to send usage data **only** if the user has explicitly opted in to usage tracking. For detailed information about what is tracked, please refer to our [usage tracking documentation](https://www.tychesoftwares.com/docs/woocommerce-product-delivery-date-lite/lite-usage-trackings/).
 
 == Changelog ==
+
+= 3.3.1 - 08/07/2026 =
+* Tweak - Update compatibility with WordPress 7.0.0
+* Tweak - Update compatibility with WooCommerce 10.9.3
 
 = 3.3.0 - 12/01/2026 =
 * Enhancement - Calendar View to display product delivery details in a calendar format.
