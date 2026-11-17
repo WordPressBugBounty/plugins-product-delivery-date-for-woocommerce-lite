@@ -4,10 +4,10 @@ Contributors: ashokrane, MoxaJogani, tychesoftwares
 Donate link: https://www.paypal.me/TycheSoftwares
 Author URI: https://www.tychesoftwares.com/
 Tags: delivery calendar, product delivery date, woocommerce order delivery, product delivery
-Requires at least: 3.0
+Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.3.2
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -242,6 +242,10 @@ Currently, it is not possible to edit the selected delivery date for the WooComm
 This plugin communicates with our tracking server to send usage data **only** if the user has explicitly opted in to usage tracking. For detailed information about what is tracked, please refer to our [usage tracking documentation](https://www.tychesoftwares.com/docs/woocommerce-product-delivery-date-lite/lite-usage-trackings/).
 
 == Changelog ==
+
+= 4.0.0 - 17/11/2026 =
+* Dev – Migrated the plugin's entire admin interface from Vue.js to React. This improves performance and maintainability and lays the groundwork for future admin UI improvements.
+* Dev - Settings are saved through the prdd-lite/admin/v1 REST API.
 
 = 3.3.2 - 08/09/2026 =
 * Fix - Missing authorization vulnerability on the Delivery Calendar page that allowed unauthorized access to order details.

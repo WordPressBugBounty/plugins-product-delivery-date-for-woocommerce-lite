@@ -53,7 +53,7 @@ if ( ! class_exists( 'Prdd_Lite_All_Component' ) ) {
 
 				require_once 'component/plugin-tracking/class-tyche-plugin-tracking.php';
 
-				new Tyche_Plugin_Tracking(
+				$prdd_lite_tracker = new Tyche_Plugin_Tracking(
 					array(
 						'plugin_name'       => $prdd_lite_plugin_name,
 						'plugin_locale'     => $prdd_lite_locale,
@@ -62,6 +62,10 @@ if ( ! class_exists( 'Prdd_Lite_All_Component' ) ) {
 						'blog_link'         => $prdd_lite_blog_post_link,
 					)
 				);
+
+				// The tracking notice is shown again after the Reset usage tracking button is clicked.
+				add_action( 'admin_notices', array( $prdd_lite_tracker, 'display_tracker_html_template' ) );
+				add_filter( $prdd_lite_plugin_prefix . '_ts_tracker_display_notice', array( __CLASS__, 'prdd_lite_ts_tracker_display_notice' ) );
 
 				$ts_pro_faq = self::prdd_lite_get_faq();
 				new Prdd_Lite_TS_Faq_Support( $prdd_lite_plugin_name, $prdd_lite_plugin_prefix, $prdd_lite_plugins_page, $prdd_lite_locale, $prdd_lite_plugin_folder_name, $prdd_lite_plugin_slug, $ts_pro_faq );
@@ -72,6 +76,23 @@ if ( ! class_exists( 'Prdd_Lite_All_Component' ) ) {
 				/* Adding Upgrade to Pro related things to plugin */
 				new Ts_Upgrade_To_Pro_Prdd( $prdd_lite_plugin_name, $prdd_lite_plugin_prefix, $prdd_lite_plugins_page, $prdd_lite_locale, $prdd_lite_plugin_folder_name, $prdd_lite_plugin_slug );
 			}
+		}
+
+		/**
+		 * Shows the usage tracking notice only on the Product Delivery Date
+		 * pages, to the users who can allow or reset the tracking.
+		 *
+		 * @hook prdd_lite_ts_tracker_display_notice
+		 *
+		 * @param bool $display Whether to display the notice.
+		 * @return bool
+		 * @since 4.0.0
+		 */
+		public static function prdd_lite_ts_tracker_display_notice( $display ) {
+			$page           = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$is_plugin_page = in_array( $page, array( PRDD_Lite_Admin_React_Page::PAGE, PRDD_Lite_Admin_React_Page::HISTORY_PAGE ), true );
+
+			return $display && $is_plugin_page && current_user_can( 'manage_options' );
 		}
 
 		/**
@@ -181,7 +202,7 @@ if ( ! class_exists( 'Prdd_Lite_All_Component' ) ) {
 			$ts_faq = array(
 				1  => array(
 					'question' => 'How to make Product delivery date field a required field on the Product Page?',
-					'answer'   => 'Currently, it is not possible in the Product Delivery Date for WooCommerce – Lite plugin to make "Delivery Date" field as "Required" field on the Product page. This is possible in the <a href = "https://www.tychesoftwares.com/store/premium-plugins/product-delivery-date-pro-for-woocommerce/?utm_source=wprepo&utm_medium=faqlink&utm_campaign=ProductDeliveryDateLite" rel="nofollow" target="_blank">Pro </a> version.',
+					'answer'   => 'Enable the "Mandatory Fields" option under the Product Delivery Date -> Settings tab on the WooCommerce edit product page. Customers will then have to select a delivery date before adding the product to the cart.',
 				),
 				2  => array(
 					'question' => 'Is it possible to add delivery date calendar on checkout page instead of for each product?',
@@ -235,25 +256,25 @@ if ( ! class_exists( 'Prdd_Lite_All_Component' ) ) {
 			$prdd_lite_add_questions = array(
 				0 => array(
 					'id'                => 4,
-					'text'              => __( 'Minimum Delivery Time (in hours) is not working as expected.', 'woocommerce-prdd-lite' ),
+					'text'              => __( 'Minimum Delivery Time (in hours) is not working as expected.', 'product-delivery-date-for-woocommerce-lite' ),
 					'input_type'        => '',
 					'input_placeholder' => '',
 				),
 				1 => array(
 					'id'                => 5,
-					'text'              => __( 'I need delivery time along with the delivery date.', 'woocommerce-prdd-lite' ),
+					'text'              => __( 'I need delivery time along with the delivery date.', 'product-delivery-date-for-woocommerce-lite' ),
 					'input_type'        => '',
 					'input_placeholder' => '',
 				),
 				2 => array(
 					'id'                => 6,
-					'text'              => __( 'I want deliveries on some specific dates only.', 'woocommerce-prdd-lite' ),
+					'text'              => __( 'I want deliveries on some specific dates only.', 'product-delivery-date-for-woocommerce-lite' ),
 					'input_type'        => '',
 					'input_placeholder' => '',
 				),
 				3 => array(
 					'id'                => 7,
-					'text'              => __( 'I have purchased the Pro version of the Plugin.', 'woocommerce-prdd-lite' ),
+					'text'              => __( 'I have purchased the Pro version of the Plugin.', 'product-delivery-date-for-woocommerce-lite' ),
 					'input_type'        => '',
 					'input_placeholder' => '',
 				),
